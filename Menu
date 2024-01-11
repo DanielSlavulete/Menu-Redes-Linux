@@ -1,0 +1,449 @@
+#!/bin/bash
+ 
+#Menú de ips
+menu_ips() {
+clear
+echo "***********************************************************************"
+echo "                          MENU IP'S                                    "
+echo "***********************************************************************"                 
+echo "1.Cambiar ip"			      
+echo "2.Cambiar máscara"		      
+echo "3.Cambiar puerta de enlace"      		      
+echo "4.Volver al menú principal"
+read -p "Selecciona una opción: " ips
+case $ips in
+#Opciones
+1)
+#Cambiar ip
+clear
+read -p "Introduce la ip deseada" ip
+sudo ifconfig $ip
+echo "*********************************"
+echo "  La ip se cambió correctamente  "
+echo "*********************************"
+echo ""
+sleep 1.5
+clear
+echo "*********************************"
+echo " Pulsa Enter para volver al menu "
+echo "*********************************"
+read 
+menu_ips
+;;
+2)
+#Cambiar máscara
+clear
+read -p "introduce la máscara deaseada: " mascara
+sudo ifconfig netmask $mascara
+echo "**********************************"
+echo "La máscara se cambió correctamente"
+echo "**********************************"
+echo ""
+sleep 1.5
+clear
+echo "*********************************"
+echo " Pulsa Enter para volver al menu "
+echo "*********************************"
+read 
+menu_ips
+;;
+3)
+#Cambiar puerta de enlace
+clear
+read -p "Introduce la puerta de enlace deseada: " gateway
+sudo route add default gw
+echo "*******************************************"
+echo "La puerta de enlace se cambió correctamente"
+echo "*******************************************"
+echo ""
+sleep 1.5
+clear
+echo "*********************************"
+echo " Pulsa Enter para volver al menu "
+echo "*********************************"
+read
+menu_ips
+;;
+4)
+#Volver al menu principal
+clear
+echo "***************************"
+echo "Volviendo al menú principal"
+echo "***************************"
+echo ""
+sleep 2
+main_menu
+;;
+esac
+}
+#Introducción de menu pings
+menu_pings() {
+#Introducimos el menú
+clear 
+echo "************************************************************************"
+echo "                         MENU PINGS                                     "
+echo "************************************************************************"                 
+echo "1.Infito"			      
+echo "2.Tamaño del paquete"		      
+echo "3.Tiempo de vida"                   
+echo "4.Número de veces"		      
+echo "5.Volver al menú principal"
+read -p "Selecciona una opción: " opcion_pings
+case $opcion_pings in
+#Ping infinito
+1)
+read -p "introduce la ip: " ip
+ping $ip
+echo "*************************************"
+echo "Pulsa Control + c + Enter para volver"
+echo "*************************************"
+echo ""
+read 
+menu_pings
+;;
+2)
+#Tamaño de paquetes
+read -p "introduce el tamaño de los paquetes: " size
+read -p "introduce la ip: " ip
+ping -s $size $ip 
+echo "*************************************"
+echo "Pulsa Control + c + Enter para volver"
+echo "*************************************"
+echo ""
+read 
+menu_pings
+;;
+3)
+#Tiempo de vida
+read -p "introduce el tiempo: " time
+read -p "introduce la ip: " ip
+ping -W $time $ip
+echo "*************************************"
+echo "Pulsa Control + c + Enter para volver"
+echo "*************************************"
+echo ""
+read 
+menu_pings
+;;
+4)
+#Numero de veces
+read -p "introduce el número de veces: " numero
+read -p "introduce la ip: " ip
+ping -c $numero $ip
+echo "*************************************"
+echo "Pulsa Control + c + Enter para volver"
+echo "*************************************"
+echo ""
+read 
+menu_pings
+;;
+5)
+#Volver al menú principal
+clear
+echo "***************************"
+echo "Volviendo al menú principal"
+echo "***************************"
+echo ""
+sleep 2
+main_menu
+;;
+*)
+clear
+echo "**************************"
+echo "   Orden desconocida      "
+echo " Pulsa Enter para volver  "
+echo "**************************"
+read
+main_menu
+;;
+esac
+}
+
+#Menu de instalación
+menu_instalacion() {
+clear 
+echo "*************************************************************************"
+echo "                           MENU INSTALACIÓN                              "
+echo "*************************************************************************"                 
+echo "1.Actualizar lista de paquetes"			      
+echo "2.Listar paquetes"		      
+echo "3.Instalar paquete"                   
+echo "4.Desinstalar paquete"		      
+echo "5.Desinstalar paquete y su configuración"
+echo "6.Volver al menú principal"
+read -p "Selecciona una opción: " opcion_instalacion
+case $opcion_instalacion in
+#Opciones
+1)
+#Actualizar lista de paquetes
+clear
+sudo apt update
+echo "Pulsa una tecla para volver: "
+read 
+menu_instalacion
+;;
+2)
+#Listar paquetes
+clear
+sudo apt list 
+echo "Pulsa una tecla para volver: "
+read 
+menu_instalacion
+;;
+3)
+#Instalar paquete
+clear
+read -p "inserta el programa que quieres instalar: " programa
+sudo apt-get install $programa
+echo "Pulsa una tecla para volver: "
+read 
+menu_instalacion
+;;
+4)
+#Desisntalar paquete
+clear
+read -p "inserta el nombre del programa que quieres borrar: " programa 
+sudo apt remove $programa
+echo "Pulsa una tecla para volver: "
+read 
+menu_instalacion
+;;
+5)
+#Desinstalar paquetes y su configuración
+clear
+read -p "inserta el nombre del programa que quieres borrar y su configuración: " programa 
+sudo apt purge $programa
+echo "Pulsa una tecla para volver: "
+read 
+menu_instalacion
+;;
+6)
+#Volver al menú principal
+clear
+echo "***************************"
+echo "Volviendo al menú principal"
+echo "***************************"
+echo ""
+sleep 2
+main_menu
+;;
+*)
+clear
+echo "**************************"
+echo "   Orden desconocida      "
+echo " Pulsa Enter para volver  "
+echo "**************************"
+read
+menu_instalacion
+;;
+esac
+}
+
+#Menu de equipos
+menu_equipo() {
+#Opciones
+echo "*************************************************************************"
+echo "                              MENU EQUIPO                                "
+echo "*************************************************************************"                 
+echo "1.Apagar el equipo inmediatamente"
+echo "2.Programar apagado"	      
+echo "3.Reiniciar el equipo inmediatamente"
+echo "4.Programar reinicio"	      
+echo "5.Cancelar programación"                   
+echo "6.Volver al menú principal"
+read -p "Selecciona una opción: " equipo
+case $equipo in
+#Opciones
+1)
+#Apagar inmediatamente
+clear
+echo "*********************"
+echo " Apagando el equipo  "
+echo "*********************"
+echo ""
+sleep 1.5
+shutdown now
+;;
+2)
+#Programar apagado
+clear
+read -r "Introduce la hora a la que quiere que se apague el ordenador: " $hora
+shutdown -h $hora
+echo "********************************"
+echo "Apagado programado correctamente"
+echo "********************************"
+echo ""
+;;
+3)
+#Reiniciar inmediatamente
+clear
+echo "***********************"
+echo " Reiniciando el equipo "
+echo "***********************"
+echo ""
+sleep 1.5
+shutdown -r now 
+;;
+4)
+#Programar reinicio
+clear
+read -r "Introduce la hora a la que quieres que se reinicie el ordenador: " $hora
+shutdown -r $hora 
+echo "*********************************"
+echo "Reinicio programado correctamente"
+echo "*********************************"
+echo ""
+;;
+5)
+#Cancelar programar 
+clear
+shutdown -c
+echo "*****************************"
+echo "Se ha cancelado correctamente"
+echo "*****************************"
+echo ""
+;;
+6)
+#Volver al menú principal
+echo "***************************"
+echo "Volviendo al menú principal"
+echo "***************************"
+echo ""
+sleep 2
+main_menu
+;;
+*)
+clear
+echo "**************************"
+echo "   Orden desconocida      "
+echo " Pulsa Enter para volver  "
+echo "**************************"
+read
+menu_equipo
+;;
+esac
+}
+#Insetar función
+main_menu() {
+#Insertar la tabla
+clear
+echo "**********************************************************"
+echo "                             MENU                         "
+echo "**********************************************************"                 
+echo "1. Ping"			      
+echo "2. Notas"		                      
+echo "3. Instalar programas"		      
+echo "4. Cambiar contraseña"		      
+echo "5. Historial de comandos"		      
+echo "6. Ayuda con uso de comando"	      
+echo "7. Equipo"
+echo "8. Configuración de red"
+echo "9. Buscar en Google"
+echo "10.Buscar en YouTube"
+read -p "Selecciona la opción: " opcion
+case $opcion in
+1)
+#Menú de pings
+clear
+echo "*************************"
+echo "Abriendo el menú de pings"
+echo "*************************"
+echo ""
+sleep 2
+menu_pings
+;;
+2)
+#Gedit
+clear 
+echo "*************************"
+echo "     Abriendo Gedit      "
+echo "*************************"
+echo ""
+sleep 2 
+gedit
+;;
+
+3)
+#Instalar programas
+clear
+echo "****************************"
+echo "Abriendo menú de instalación"
+echo "****************************"
+echo ""
+sleep 2
+menu_instalacion
+;;
+4)
+#Cambiar contraseña
+clear 
+cd ~
+cd /etc
+clear
+cat passwd
+read -p "Selecciona el usuario al que quieres cambiar la contraseña: " user
+sudo passwd $user 
+;;
+5)
+#Historial
+clear 
+history
+read
+main_menu
+;;
+6)
+#Ayuda guia de comandos 
+clear 
+xdg-open https://blog.desdelinux.net/mas-de-400-comandos-para-gnulinux-que-deberias-conocer/
+;;
+7)
+#Gestionar equipo
+clear
+echo "****************************"
+echo " Abriendo el menú de equipo "
+echo "****************************"
+echo ""
+sleep 2
+menu_equipo
+;;
+8)
+#Menú de ips
+clear
+echo "************************"
+echo "Abriendo el menú de ip's"
+echo "************************"
+echo ""
+sleep 2
+menu_ips
+;;
+9)
+#Búsqueda en Google
+clear
+read -p "¿Qué quieres buscar? " busqueda 
+xdg-open "https://www.google.com/search?q=$busqueda"
+echo "*************************"
+echo "Pulsa Enter para volver: "
+echo "*************************"
+read 
+main_menu
+;;
+10)
+#Búsqueda en YouTube
+read -p "¿Qué quieres buscar? " busqueda 
+xdg-open "https://www.youtube.com/results?search_query=$busqueda"
+echo "*************************"
+echo "Pulsa Enter para volver: "
+echo "*************************"
+read 
+main_menu
+;;
+*)
+echo "**************************"
+echo "   Orden desconocida      "
+echo " Pulsa Enter para volver  "
+echo "**************************"
+read
+main_menu
+;;
+esac
+}
+main_menu		      
